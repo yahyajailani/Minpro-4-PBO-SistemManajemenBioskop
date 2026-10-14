@@ -8,11 +8,11 @@
 
 **Sistem Manajemen Bioskop** merupakan program berbasis Java yang digunakan untuk mengelola data film, studio, tiket, penonton, dan transaksi pembelian tiket.
 
-Program memiliki dua jenis pengguna, yaitu **Admin** dan **Penonton**. Admin dapat mengelola data film, studio, tiket, dan penonton melalui fitur CRUD. Admin juga dapat melihat riwayat transaksi.
+Program memiliki dua jenis pengguna, yaitu **Admin** dan **Penonton**. Admin dapat mengelola data film, studio, dan tiket melalui fitur CRUD. Admin juga dapat melihat data penonton dan riwayat transaksi.
 
 Penonton dapat melakukan registrasi dan login, melihat profil, melihat daftar film dan studio, membeli tiket, serta melihat riwayat transaksi.
 
-Pada Mini Project 4, penyimpanan data yang sebelumnya menggunakan `ArrayList` dikembangkan menjadi **database MySQL**. Program terhubung ke database menggunakan **JDBC** dengan **Prepared Statement** dan pola **DAO (Data Access Object)**, sehingga data tersimpan permanen dan tidak hilang saat program ditutup.
+Pada Mini Project 4, penyimpanan data yang sebelumnya menggunakan `ArrayList` dikembangkan menjadi **database MySQL (MariaDB)**. Program terhubung ke database menggunakan **JDBC** dengan **Prepared Statement** dan pola **DAO (Data Access Object)**, sehingga data tersimpan permanen dan tidak hilang saat program ditutup.
 
 Program juga dilengkapi dengan validasi input agar data yang dimasukkan sesuai dengan ketentuan sistem. Contohnya validasi nama, email, nomor HP, password, angka, pilihan menu, tipe studio, dan kapasitas studio.
 
@@ -27,8 +27,8 @@ Data awal (dummy data) diisi melalui file **.sql** pada database, bukan melalui 
 * Java
 * Apache NetBeans
 * Maven
-* MySQL
-* Laragon
+* MySQL / MariaDB
+* Laragon (phpMyAdmin)
 * JDBC (mysql-connector-j)
 * Prepared Statement
 * DAO (Data Access Object)
@@ -71,6 +71,8 @@ src/main/java/
 │
 └── view/
     └── BioskopView.java
+
+sistem_manajemen_bioskop.sql   (struktur tabel dan dummy data)
 ```
 <img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
@@ -93,7 +95,7 @@ Pengguna dapat memilih sesuai dengan kebutuhan.
 
 ## 2. Login Admin
 
-Admin dapat login menggunakan akun bawaan:
+Admin dapat login menggunakan akun bawaan yang sudah ditentukan di dalam program (akun admin tidak disimpan di database):
 
 <img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
@@ -103,7 +105,7 @@ Jika login berhasil, Admin masuk ke menu Admin.
 <img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 
-Admin dapat melakukan CRUD pada data yang tersedia di database. Ketika Admin memilih fitur Read (misalnya melihat data film atau studio), data dummy dari database langsung tampil, misalnya film Avenger: Endgame, Interstellar, Pabrik Rambut, dan Inside Out, tanpa perlu input dari awal.
+Admin dapat melakukan CRUD pada data film, studio, dan tiket yang tersedia di database, serta melihat data penonton dan transaksi. Ketika Admin memilih fitur Read (misalnya melihat data film atau studio), data dummy dari database langsung tampil, misalnya film Avenger: Endgame, Interstellar, Pabrik Rambut, dan Inside Out, tanpa perlu input dari awal.
 
 <img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
@@ -125,9 +127,9 @@ Contohnya:
 <img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 
-akan ditolak karena nama hanya boleh berisi huruf dan spasi.
+akan ditolak karena nama hanya boleh berisi huruf dan spasi, dengan panjang minimal 2 karakter.
 
-Email juga diperiksa agar mengikuti format yang sesuai.
+Email juga diperiksa agar mengikuti format yang sesuai, nomor HP harus 8-20 karakter berupa angka atau tanda +, dan password minimal 6 karakter.
 
 ---
 
@@ -185,7 +187,7 @@ Rp50.000 + Rp10.000 = Rp60.000
 <img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 
-Jika jumlah tiket melebihi kapasitas studio, transaksi akan ditolak.
+Jumlah tiket harus berupa angka bulat lebih dari 0. Jika jumlah tiket melebihi kapasitas studio, transaksi akan ditolak.
 
 Setelah berhasil, sistem membuat kode transaksi dan menyimpan data tiket ke tabel `tiket` melalui `TiketDAO`, serta data transaksi ke tabel `transaksi` melalui `TransaksiDAO`. Total pembayaran dihitung dengan diskon otomatis berdasarkan total harga dan jumlah tiket.
 
@@ -498,11 +500,53 @@ public double hitungDiskon(double total, int jumlahTiket)
 
 Versi pertama menghitung diskon berdasarkan total harga (5% untuk total minimal Rp50.000 dan 10% untuk total minimal Rp100.000). Versi kedua menambahkan jumlah tiket sebagai parameter, yaitu diskon 15% jika membeli minimal 4 tiket.
 
-**b. Constructor pada class `Film`, `Tiket`, `Transaksi`, `Pengguna`, dan `Penonton`**
+**b. Constructor pada class `Film`, `Studio`, `Tiket`, `Transaksi`, `Pengguna`, dan `Penonton`**
 
 Terdapat dua constructor: satu tanpa ID untuk data baru yang akan disimpan ke database, dan satu dengan ID untuk data yang dibaca dari database.
 
 <img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+
+---
+
+## 4. Interface (Abstraction)
+
+Interface adalah sebuah struktur dalam Java yang digunakan sebagai aturan atau kontrak bagi class yang menggunakannya. Interface berisi method yang harus dibuat atau diimplementasikan oleh class tersebut.
+
+Interface biasanya digunakan untuk menerapkan abstraction, karena interface hanya menentukan apa yang harus dilakukan, sedangkan cara melakukan proses tersebut ditentukan oleh class yang mengimplementasikannya.
+
+Pada program ini terdapat interface bernama `Pembayaran` yang digunakan untuk mengatur proses pembayaran. Interface tersebut memiliki dua method, yaitu:
+
+```java
+public interface Pembayaran {
+
+    double hitungTotal();
+
+    void tampilkanPembayaran();
+}
+```
+
+<img width="350" alt="image" src="GANTI_LINK_GAMBAR" />
+
+Interface tersebut diimplementasikan oleh class `Transaksi`:
+
+```java
+public class Transaksi implements Pembayaran {
+
+    @Override
+    public double hitungTotal() {
+        return totalAwal - diskon;
+    }
+
+    @Override
+    public void tampilkanPembayaran() {
+        // menampilkan detail pembayaran
+    }
+}
+```
+
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+
+Method `hitungTotal()` menghitung total pembayaran setelah diskon, sedangkan `tampilkanPembayaran()` menampilkan kode transaksi, nama penonton, film, studio, jumlah tiket, harga awal, diskon, dan total bayar.
 
 ---
 
@@ -514,6 +558,7 @@ Program memiliki beberapa fitur utama:
 * Prepared Statement pada seluruh query
 * DAO untuk setiap tabel
 * Dummy data awal melalui file .sql
+* Interface Pembayaran
 * Login Admin
 * Login Penonton
 * Registrasi Penonton
@@ -548,7 +593,7 @@ Nama : Yahya123
 Output:
 
 ```text
-Nama hanya boleh berisi huruf dan spasi.
+Nama minimal 2 karakter dan hanya berisi huruf/spasi.
 ```
 <img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
@@ -563,7 +608,19 @@ Output:
 
 ```text
 Format email tidak valid.
-Contoh : nama@gmail.com
+```
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+
+### Validasi Password
+
+```text
+Password : abc
+```
+
+Output:
+
+```text
+Password minimal 6 karakter.
 ```
 <img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
@@ -576,27 +633,29 @@ Harga tiket film : Rpabc
 Output:
 
 ```text
-Harga harus berupa angka.
+Harga harus lebih dari 0.
 ```
 <img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 ### Validasi Tipe Studio
 
+Tipe studio dipilih melalui menu angka, sehingga hanya tersedia dua pilihan:
+
 ```text
-Tipe : Gold
+1. Regular
+2. VIP
+```
+
+Jika memasukkan pilihan di luar menu, misalnya:
+
+```text
+Pilih tipe studio : 3
 ```
 
 Output:
 
 ```text
-Tipe studio hanya Regular atau VIP.
-```
-
-Tipe studio yang diperbolehkan:
-
-```text
-Regular
-VIP
+Masukkan angka antara 1 sampai 2.
 ```
 <img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
@@ -607,20 +666,12 @@ Jika kapasitas studio adalah 100 orang:
 ```text
 Jumlah tiket : 109
 ```
+
+Output:
+
+```text
+Jumlah tiket melebihi kapasitas studio.
+```
 <img width="345" height="300" alt="image" src="GANTI_LINK_GAMBAR" />
 
 maka sistem akan menolak karena jumlah tiket melebihi kapasitas studio.
-
-# Nilai Tambah
-### <b>Penerapan Interface</b>
-Interface adalah sebuah struktur dalam Java yang digunakan sebagai aturan atau kontrak bagi class yang menggunakannya. Interface berisi method yang harus dibuat atau diimplementasikan oleh class tersebut.
-Interface biasanya digunakan untuk menerapkan abstraction, karena interface hanya menentukan apa yang harus dilakukan, sedangkan cara melakukan proses tersebut ditentukan oleh class yang mengimplementasikannya.
-</p>
-
-Pada program ini saya membuat interface bernama Pembayaran yang digunakan untuk mengatur proses pembayaran. Interface tersebut memiliki dua method, yaitu :
-hitungTotal() dan
-tampilkanPembayaran()
-
-<img width="350" height="300" alt="image" src="GANTI_LINK_GAMBAR" />
-</p>
-Interface tersebut diterapkan pada class Transaksi.
