@@ -41,8 +41,6 @@ public class BioskopController {
     private final TiketDAO tiketDAO = new TiketDAO();
     private final TransaksiDAO transaksiDAO = new TransaksiDAO();
 
-    // ================= MENU UTAMA =================
-
     public void jalankan() {
         view.header();
 
@@ -128,8 +126,6 @@ public class BioskopController {
         }
     }
 
-    // ================= MENU ADMIN =================
-
     private void menuAdmin() {
         boolean keluar = false;
 
@@ -146,8 +142,6 @@ public class BioskopController {
             }
         }
     }
-
-    // ================= MENU PENONTON =================
 
     private void menuPenonton(Penonton penonton) {
         boolean keluar = false;
@@ -172,8 +166,6 @@ public class BioskopController {
         System.out.println("Email : " + penonton.getEmail());
         System.out.println("No HP : " + penonton.getNoHP());
     }
-
-    // ================= CRUD FILM =================
 
     private void menuFilm() {
         boolean kembali = false;
@@ -296,8 +288,6 @@ public class BioskopController {
         }
     }
 
-    // ================= CRUD STUDIO =================
-
     private void menuStudio() {
         boolean kembali = false;
 
@@ -416,8 +406,6 @@ public class BioskopController {
             );
         }
     }
-
-    // ================= CRUD TIKET =================
 
     private void menuTiket() {
         boolean kembali = false;
@@ -625,8 +613,6 @@ public class BioskopController {
         }
     }
 
-    // ================= PENONTON =================
-
     private void lihatPenonton() {
         try {
             List<Penonton> daftar = penontonDAO.getSemua();
@@ -656,8 +642,6 @@ public class BioskopController {
             );
         }
     }
-
-    // ================= PEMBELIAN DAN TRANSAKSI =================
 
     private void beliTiket(Penonton penonton) {
         List<Film> filmList = ambilFilm();
@@ -696,7 +680,6 @@ public class BioskopController {
         try {
             Tiket tiket = new Tiket(penonton, film, studio, jumlah);
 
-            // Simpan tiket terlebih dahulu untuk mendapatkan ID dari database.
             tiketDAO.tambah(tiket);
 
             String kode = "TRX-" + System.currentTimeMillis();
@@ -756,8 +739,6 @@ public class BioskopController {
             tampilError("membaca riwayat pembelian", e);
         }
     }
-
-    // ================= PENANGANAN ERROR =================
 
     private void tampilError(String proses, Exception e) {
         System.out.println("Gagal " + proses + ": " + e.getMessage());
