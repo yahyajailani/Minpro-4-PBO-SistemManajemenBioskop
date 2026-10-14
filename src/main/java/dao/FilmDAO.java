@@ -60,7 +60,7 @@ public class FilmDAO {
 
     public void update(int id, Film film) throws SQLException {
         String sql = "UPDATE film SET judul=?, genre=?, durasi=?, "
-                + "harga=? WHERE id_film=?";
+                + "harga_tiket=? WHERE id_film=?";
 
         try (Connection c = DatabaseConnection.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
