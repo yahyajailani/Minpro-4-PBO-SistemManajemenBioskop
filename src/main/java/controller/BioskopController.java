@@ -65,8 +65,6 @@ public class BioskopController {
         }
     }
 
-    // ================= LOGIN DAN REGISTRASI =================
-
     private void loginAdmin() {
         String email = view.bacaEmail("Email admin: ");
         String password = view.bacaString("Password: ");
