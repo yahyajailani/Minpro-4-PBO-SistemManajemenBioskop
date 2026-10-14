@@ -96,11 +96,11 @@ Pengguna dapat memilih sesuai dengan kebutuhan.
 
 Admin dapat login menggunakan akun bawaan yang sudah ditentukan di dalam program (akun admin tidak disimpan di database):
 
-<img width="163" height="41" alt="Screenshot 2026-10-14 120448" src="https://github.com/user-attachments/assets/e0bdbb2d-3f8c-4516-a865-41fe2ac3d0bf" />
+<img width="500" alt="Screenshot 2026-10-14 120448" src="https://github.com/user-attachments/assets/e0bdbb2d-3f8c-4516-a865-41fe2ac3d0bf" />
 
 Jika login berhasil, Admin masuk ke menu Admin.
 
-<img width="149" height="80" alt="Screenshot 2026-10-14 115847" src="https://github.com/user-attachments/assets/f0c746c2-74d2-48e3-815b-5f3faf658fc0" />
+<img width="500" alt="Screenshot 2026-10-14 115847" src="https://github.com/user-attachments/assets/f0c746c2-74d2-48e3-815b-5f3faf658fc0" />
 
 Admin dapat melakukan CRUD pada data film, studio, dan tiket yang tersedia di database, serta melihat data penonton dan transaksi. Ketika Admin memilih fitur Read (misalnya melihat data film atau studio), data dummy dari database langsung tampil, misalnya film Avenger: Endgame, Interstellar, Pabrik Rambut, dan Inside Out, tanpa perlu input dari awal.
 
@@ -250,7 +250,7 @@ Contohnya:
 
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/bff36ea2-2109-42ba-b953-bd17e17ddd22" />
 
-
+```java
 filmDAO.tambah(film);
 List<Film> daftar = filmDAO.getSemua();
 ```
@@ -309,9 +309,9 @@ INSERT INTO 'transaksi' ('id_transaksi', 'kode_transaksi', 'id_tiket', 'total_aw
 
 Karena data sudah ada di database, saat fitur Read dijalankan data langsung tampil tanpa perlu input dari awal.
 
-<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/ea591ee5-adee-4416-bb91-41565787c71c" />
 
-<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/c56ce3e0-6a66-4548-9404-7229306fca5e" />
 
 ---
 
@@ -323,7 +323,7 @@ Encapsulation diterapkan dengan menggunakan atribut 'private' pada class.
 
 Contohnya pada class 'Film':
 
-<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/7b265fa5-d53e-48a0-8897-802e66c43fe8" />
 
 
 Atribut tersebut tidak dapat diakses secara langsung dari class lain. Untuk mengakses atau mengubah data digunakan getter dan setter.
@@ -340,18 +340,18 @@ Inheritance diterapkan pada hubungan antara class 'Pengguna', 'Admin', dan 'Peno
 
 'Pengguna' digunakan sebagai class induk:
 
-<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/cc983b3d-8dcf-4c36-a252-5f95af157435" />
 
 
 Kemudian 'Admin' dan 'Penonton' mewarisi class tersebut:
 
 ### Admin
 ---
-<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/013d612a-a8f4-4475-9ae4-c0d2ccb5755e" />
 
 ### Penonton
 ---
-<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/c1471cea-9310-4eb5-9d3c-0cc6ef9d3e4e" />
 
 Atribut umum seperti:
 
@@ -378,14 +378,14 @@ Model digunakan untuk menyimpan data dan objek program.
 
 Contohnya:
 
-<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/a79bfeb8-1966-407f-b929-d1cfeca4cb2d" />
 
 
 ### View
 
 View terdapat pada:
 
-<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/882b087b-17a5-463a-bf6c-7bda277de7df" />
 
 
 View bertugas menangani tampilan program dan input dari pengguna, seperti menu, input data, serta validasi input.
@@ -394,7 +394,7 @@ View bertugas menangani tampilan program dan input dari pengguna, seperti menu, 
 
 Controller terdapat pada:
 
-<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/4920bdcd-854e-4708-84ce-a19ca549ef11" />
 
 
 Controller bertugas mengatur alur program dan menghubungkan View dengan Model dan DAO.
@@ -411,17 +411,17 @@ Polymorphism diterapkan melalui **method overriding**.
 
 Pada class 'Pengguna' terdapat method abstract:
 
-<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/6a2e8310-664f-43d7-ab7e-cf58be2d0ee6" />
 
 
 Method tersebut kemudian dioverride oleh class 'Admin':
 
-<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/9b5f7560-d0cd-486c-890c-e5e319aa42ca" />
 
 
 Sedangkan pada class 'Penonton':
 
-<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/1f986aca-5026-419b-8db4-115c3e54094b" />
 
 
 Nama method yang digunakan sama, yaitu 'getRole()' dan 'tampilkanMenu()', tetapi hasilnya berbeda berdasarkan class yang mengimplementasikannya.
@@ -434,11 +434,8 @@ Method overloading adalah method dengan nama yang sama tetapi parameter yang ber
 
 **a. Method 'hitungDiskon()' pada class 'Penonton'**
 
-```java
-public double hitungDiskon(double total)
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/77a69d80-b272-4f78-9ed4-c683a5f779f5" />
 
-public double hitungDiskon(double total, int jumlahTiket)
-```
 
 Versi pertama menghitung diskon berdasarkan total harga (5% untuk total minimal Rp50.000 dan 10% untuk total minimal Rp100.000). Versi kedua menambahkan jumlah tiket sebagai parameter, yaitu diskon 15% jika membeli minimal 4 tiket.
 
@@ -446,7 +443,9 @@ Versi pertama menghitung diskon berdasarkan total harga (5% untuk total minimal 
 
 Terdapat dua constructor: satu tanpa ID untuk data baru yang akan disimpan ke database, dan satu dengan ID untuk data yang dibaca dari database.
 
-<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/71b967f5-7c98-4859-a6d4-c29d00d665e1" />
+
+pada gambar hanya menampilkan contoh contructor dari film.
 
 ---
 
@@ -467,7 +466,8 @@ public interface Pembayaran {
 }
 ```
 
-<img width="350" alt="image" src="GANTI_LINK_GAMBAR" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/f069363d-1bf2-471d-8602-9269ffe29de7" />
+
 
 Interface tersebut diimplementasikan oleh class 'Transaksi':
 
@@ -485,8 +485,10 @@ public class Transaksi implements Pembayaran {
     }
 }
 ```
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/e265c4e5-4707-410e-a73b-66a77783526f" />
 
-<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/8c90ac77-161a-4f0f-ab22-1277ddd56091" />
 
 Method 'hitungTotal()' menghitung total pembayaran setelah diskon, sedangkan 'tampilkanPembayaran()' menampilkan kode transaksi, nama penonton, film, studio, jumlah tiket, harga awal, diskon, dan total bayar.
 
@@ -529,7 +531,7 @@ Program memiliki beberapa fitur utama:
 ### Validasi Nama
 
 ```text
-Nama : Yahya123
+Nama : Yahya13
 ```
 
 Output:
@@ -537,7 +539,7 @@ Output:
 ```text
 Nama minimal 2 karakter dan hanya berisi huruf/spasi.
 ```
-<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/f717a841-f485-42ce-b6e7-0f058fa3aec8" />
 
 
 ### Validasi Email
@@ -551,7 +553,20 @@ Output:
 ```text
 Format email tidak valid.
 ```
-<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/72160484-e4d8-469e-8855-2edd30828684" />
+
+### Validasi Nomor HP
+
+```text
+Nomor HP : yahya8
+```
+
+Output:
+
+```text
+Nomor HP harus 8-20 karakter berupa angka atau tanda +.
+```
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/37528189-a6cd-43df-b716-a5cf2fff6ecf" />
 
 ### Validasi Password
 
@@ -564,7 +579,7 @@ Output:
 ```text
 Password minimal 6 karakter.
 ```
-<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/551c6527-f8f1-4951-beeb-c8ca85711e7c" />
 
 ### Validasi Harga
 
