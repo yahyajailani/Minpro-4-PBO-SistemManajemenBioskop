@@ -40,7 +40,7 @@ Data awal (dummy data) diisi melalui file **.sql** pada database, bukan melalui 
 
 ## Struktur Project
 
-'''text
+```text
 src/main/java/
 │
 ├── main/
@@ -71,7 +71,7 @@ src/main/java/
 │
 └── view/
     └── BioskopView.java
-'''
+```
 
 <img width="500" alt="Screenshot 2026-10-14 115418" src="https://github.com/user-attachments/assets/af0ddfad-c99d-4486-b096-ae6ca5fdd18d" />
 
@@ -150,38 +150,38 @@ Daftar film dan studio diambil dari database. Harga tiket tidak dimasukkan oleh 
 
 Contohnya:
 
-'''text
+```text
 Harga Film = Rp50.000
-'''
+```
 
 Jika memilih:
 
-'''text
+```text
 Studio Regular
-'''
+```
 
-'''text
+```text
 diskon : 5%
-'''
+```
 maka harga tiket:
 
-'''text
+```text
 Rp47.500
-'''
+```
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/8c21c53e-d675-43a7-9c10-345fced24242" />
 
 
 Sedangkan jika memilih:
 
-'''text
+```text
 Studio VIP
-'''
+```
 
 maka sistem otomatis menghitung:
 
-'''text
+```text
 Rp50.000 + Rp10.000 = Rp60.000 + 5% = Rp57.000
-'''
+```
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/7a719158-dd5e-4469-8baf-1d5a493fa3a0" />
 
 
@@ -253,7 +253,7 @@ Contohnya:
 
 filmDAO.tambah(film);
 List<Film> daftar = filmDAO.getSemua();
-'''
+```
 
 Dengan DAO, tugas setiap bagian menjadi lebih jelas. View menangani tampilan dan input, Controller mengatur alur program, Model menyimpan data objek, dan DAO menangani akses ke database.
 
@@ -277,35 +277,35 @@ Tabel 'tiket' berelasi dengan 'penonton', 'film', dan 'studio' melalui foreign k
 
 Contoh data awal pada tabel 'film':
 
-'''sql
+```sql
 INSERT INTO 'film' ('id_film', 'Judul', 'genre', 'durasi', 'harga_tiket') VALUES
 (1, 'Avenger: Endgame', 'Action, Sci-fi', 180, 50000),
 (2, 'Interstellar', 'Sci-fi', 150, 45000),
 (3, 'Pabrik Rambut', 'Thriller', 170, 50000),
 (4, 'Inside Out', 'Fantasy', 200, 45000);
-'''
+```
 
 Contoh data awal pada tabel 'studio':
 
-'''sql
+```sql
 INSERT INTO 'studio' ('id_studio', 'nama', 'kapasitas', 'tipe') VALUES
 (1, 'Studio 1', 100, 'Regular'),
 (2, 'Studio 2', 80, 'VIP'),
 (3, 'Studio 3', 120, 'Regular'),
 (4, 'Studio 4', 60, 'VIP');
-'''
+```
 
 Selain itu, file '.sql' juga berisi data awal untuk tabel 'penonton' (5 data), 'tiket' (4 data), dan 'transaksi' (4 data), sehingga fitur lihat data penonton, kelola tiket, dan riwayat transaksi juga langsung menampilkan data.
 
 Contohnya data pada tabel 'transaksi':
 
-'''sql
+```sql
 INSERT INTO 'transaksi' ('id_transaksi', 'kode_transaksi', 'id_tiket', 'total_awal', 'diskon', 'total_bayar', 'tanggal_transaksi') VALUES
 (1, 'TRX001', 1, 100000, 10000, 90000, '2026-10-12 09:59:25'),
 (2, 'TRX002', 2, 55000, 5000, 50000, '2026-10-12 09:59:25'),
 (3, 'TRX003', 3, 100000, 10000, 90000, '2026-10-12 09:59:25'),
 (4, 'TRX004', 4, 55000, 0, 55000, '2026-10-12 09:59:25');
-'''
+```
 
 Karena data sudah ada di database, saat fitur Read dijalankan data langsung tampil tanpa perlu input dari awal.
 
@@ -355,12 +355,12 @@ Kemudian 'Admin' dan 'Penonton' mewarisi class tersebut:
 
 Atribut umum seperti:
 
-'''java
+```java
 id
 nama
 email
 noHP
-'''
+```
 
 diletakkan pada class 'Pengguna'.
 
@@ -434,11 +434,11 @@ Method overloading adalah method dengan nama yang sama tetapi parameter yang ber
 
 **a. Method 'hitungDiskon()' pada class 'Penonton'**
 
-'''java
+```java
 public double hitungDiskon(double total)
 
 public double hitungDiskon(double total, int jumlahTiket)
-'''
+```
 
 Versi pertama menghitung diskon berdasarkan total harga (5% untuk total minimal Rp50.000 dan 10% untuk total minimal Rp100.000). Versi kedua menambahkan jumlah tiket sebagai parameter, yaitu diskon 15% jika membeli minimal 4 tiket.
 
@@ -458,20 +458,20 @@ Interface biasanya digunakan untuk menerapkan abstraction, karena interface hany
 
 Pada program ini terdapat interface bernama 'Pembayaran' yang digunakan untuk mengatur proses pembayaran. Interface tersebut memiliki dua method, yaitu:
 
-'''java
+```java
 public interface Pembayaran {
 
     double hitungTotal();
 
     void tampilkanPembayaran();
 }
-'''
+```
 
 <img width="350" alt="image" src="GANTI_LINK_GAMBAR" />
 
 Interface tersebut diimplementasikan oleh class 'Transaksi':
 
-'''java
+```java
 public class Transaksi implements Pembayaran {
 
     @Override
@@ -484,7 +484,7 @@ public class Transaksi implements Pembayaran {
         // menampilkan detail pembayaran
     }
 }
-'''
+```
 
 <img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
@@ -528,92 +528,92 @@ Program memiliki beberapa fitur utama:
 
 ### Validasi Nama
 
-'''text
+```text
 Nama : Yahya123
-'''
+```
 
 Output:
 
-'''text
+```text
 Nama minimal 2 karakter dan hanya berisi huruf/spasi.
-'''
+```
 <img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 
 ### Validasi Email
 
-'''text
+```text
 Email : yahyagmail.com
-'''
+```
 
 Output:
 
-'''text
+```text
 Format email tidak valid.
-'''
+```
 <img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 ### Validasi Password
 
-'''text
+```text
 Password : abc
-'''
+```
 
 Output:
 
-'''text
+```text
 Password minimal 6 karakter.
-'''
+```
 <img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 ### Validasi Harga
 
-'''text
+```text
 Harga tiket film : Rpabc
-'''
+```
 
 Output:
 
-'''text
+```text
 Harga harus lebih dari 0.
-'''
+```
 <img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 ### Validasi Tipe Studio
 
 Tipe studio dipilih melalui menu angka, sehingga hanya tersedia dua pilihan:
 
-'''text
+```text
 1. Regular
 2. VIP
-'''
+```
 
 Jika memasukkan pilihan di luar menu, misalnya:
 
-'''text
+```text
 Pilih tipe studio : 3
-'''
+```
 
 Output:
 
-'''text
+```text
 Masukkan angka antara 1 sampai 2.
-'''
+```
 <img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 ### Validasi Kapasitas Tiket
 
 Jika kapasitas studio adalah 100 orang:
 
-'''text
+```text
 Jumlah tiket : 109
-'''
+```
 
 Output:
 
-'''text
+```text
 Jumlah tiket melebihi kapasitas studio.
-'''
+```
 <img width="345" height="300" alt="image" src="GANTI_LINK_GAMBAR" />
 
 maka sistem akan menolak karena jumlah tiket melebihi kapasitas studio.
