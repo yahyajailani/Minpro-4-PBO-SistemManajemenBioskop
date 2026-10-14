@@ -71,8 +71,8 @@ src/main/java/
 │
 └── view/
     └── BioskopView.java
-
 '''
+
 <img width="500" alt="Screenshot 2026-10-14 115418" src="https://github.com/user-attachments/assets/af0ddfad-c99d-4486-b096-ae6ca5fdd18d" />
 
 Struktur tersebut membagi program menjadi bagian **Model, View, dan Controller**, ditambah **DAO** untuk akses database dan **config** untuk koneksi database, sehingga setiap bagian memiliki fungsi masing-masing.
