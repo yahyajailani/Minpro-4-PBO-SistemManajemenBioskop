@@ -12,9 +12,13 @@ Program memiliki dua jenis pengguna, yaitu **Admin** dan **Penonton**. Admin dap
 
 Penonton dapat melakukan registrasi dan login, melihat profil, melihat daftar film dan studio, membeli tiket, serta melihat riwayat transaksi.
 
+Pada Mini Project 4, penyimpanan data yang sebelumnya menggunakan `ArrayList` dikembangkan menjadi **database MySQL**. Program terhubung ke database menggunakan **JDBC** dengan **Prepared Statement** dan pola **DAO (Data Access Object)**, sehingga data tersimpan permanen dan tidak hilang saat program ditutup.
+
 Program juga dilengkapi dengan validasi input agar data yang dimasukkan sesuai dengan ketentuan sistem. Contohnya validasi nama, email, nomor HP, password, angka, pilihan menu, tipe studio, dan kapasitas studio.
 
 Harga tiket ditentukan berdasarkan harga yang terdapat pada data film. Penonton tidak dapat memasukkan harga sendiri. Jika memilih studio bertipe **VIP**, sistem otomatis menambahkan biaya sebesar **Rp10.000**.
+
+Data awal (dummy data) diisi melalui file **.sql** pada database, bukan melalui kode program, sehingga saat fitur Read dijalankan data langsung tampil.
 
 ---
 
@@ -23,20 +27,24 @@ Harga tiket ditentukan berdasarkan harga yang terdapat pada data film. Penonton 
 * Java
 * Apache NetBeans
 * Maven
-* ArrayList
+* MySQL
+* Laragon
+* JDBC (mysql-connector-j)
+* Prepared Statement
+* DAO (Data Access Object)
 * Object-Oriented Programming (OOP)
 * MVC (Model-View-Controller)
-* Interaface
-* Laragon
+* Interface
 
 ---
 
 ## Struktur Project
 
 ```text
-src/main/java/com/mycompany/pertemuan1pbo/
+src/main/java/
 │
-├── Main.java
+├── main/
+│   └── Main.java
 │
 ├── config/
 │   └── DatabaseConnection.java
@@ -58,15 +66,15 @@ src/main/java/com/mycompany/pertemuan1pbo/
 │   ├── Film.java
 │   ├── Studio.java
 │   ├── Tiket.java
-│   └── Transaksi.java
+│   ├── Transaksi.java
 │   └── Pembayaran.java (Interface)
 │
 └── view/
     └── BioskopView.java
 ```
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/791d75a5-9727-44f8-88cd-3f317d6ff112" />
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
-Struktur tersebut membagi program menjadi bagian **Model, View, dan Controller** sehingga setiap bagian memiliki fungsi masing-masing.
+Struktur tersebut membagi program menjadi bagian **Model, View, dan Controller**, ditambah **DAO** untuk akses database dan **config** untuk koneksi database, sehingga setiap bagian memiliki fungsi masing-masing.
 
 ---
 
@@ -76,7 +84,7 @@ Struktur tersebut membagi program menjadi bagian **Model, View, dan Controller**
 
 Saat program dijalankan, pengguna akan melihat menu:
 
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/82ba7e53-211f-4436-9f46-4784da969d3b" />
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 
 Pengguna dapat memilih sesuai dengan kebutuhan.
@@ -87,15 +95,17 @@ Pengguna dapat memilih sesuai dengan kebutuhan.
 
 Admin dapat login menggunakan akun bawaan:
 
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/d9670ba6-af2e-46fe-bd2a-598290efe0cf" />
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 
 Jika login berhasil, Admin masuk ke menu Admin.
 
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/efdae180-cc28-4bec-8c34-646545513fcd" />
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 
-Admin dapat melakukan CRUD pada data yang tersedia.
+Admin dapat melakukan CRUD pada data yang tersedia di database. Ketika Admin memilih fitur Read (misalnya melihat data film atau studio), data dummy dari database langsung tampil, misalnya film Avenger: Endgame, Interstellar, Pabrik Rambut, dan Inside Out, tanpa perlu input dari awal.
+
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 ---
 
@@ -105,13 +115,14 @@ Penonton yang belum mempunyai akun dapat melakukan registrasi dengan mengisi:
 
 * Nama
 * Email
+* Nomor HP
 * Password
 
-Setiap data akan divalidasi sebelum disimpan.
+Setiap data akan divalidasi sebelum disimpan. Program juga memeriksa apakah email sudah terdaftar. Jika valid, data disimpan ke tabel `penonton` melalui `PenontonDAO`.
 
 Contohnya:
 
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/61b56af0-383f-45c7-89bb-c22e6d8e69d6" />
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 
 akan ditolak karena nama hanya boleh berisi huruf dan spasi.
@@ -122,11 +133,11 @@ Email juga diperiksa agar mengikuti format yang sesuai.
 
 ## 4. Login Penonton
 
-Setelah melakukan registrasi, penonton dapat login menggunakan email dan password.
+Setelah melakukan registrasi, penonton dapat login menggunakan email dan password. Data login dicocokkan dengan data pada database.
 
 Jika berhasil, penonton akan masuk ke menu:
 
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/9984cbd5-10f5-492a-ba6d-d1db1e7c6128" />
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 ---
 
@@ -138,7 +149,7 @@ Pada proses pembelian tiket, penonton memilih:
 2. Studio
 3. Jumlah tiket
 
-Harga tiket tidak dimasukkan oleh penonton karena sudah berasal dari data film.
+Daftar film dan studio diambil dari database. Harga tiket tidak dimasukkan oleh penonton karena sudah berasal dari data film.
 
 Contohnya:
 
@@ -157,7 +168,7 @@ maka harga tiket:
 ```text
 Rp50.000
 ```
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/90bd4837-b94b-466f-9b7d-a17830f2593d" />
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 
 Sedangkan jika memilih:
@@ -171,12 +182,192 @@ maka sistem otomatis menghitung:
 ```text
 Rp50.000 + Rp10.000 = Rp60.000
 ```
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/012189ad-88b9-4c21-a1c4-c81a0c75e426" />
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 
 Jika jumlah tiket melebihi kapasitas studio, transaksi akan ditolak.
 
-Setelah berhasil, sistem membuat ID transaksi dan menyimpan data transaksi ke dalam 'ArrayList'.
+Setelah berhasil, sistem membuat kode transaksi dan menyimpan data tiket ke tabel `tiket` melalui `TiketDAO`, serta data transaksi ke tabel `transaksi` melalui `TransaksiDAO`. Total pembayaran dihitung dengan diskon otomatis berdasarkan total harga dan jumlah tiket.
+
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+
+---
+
+## 6. Riwayat Transaksi
+
+Admin dapat melihat seluruh riwayat transaksi, sedangkan penonton hanya dapat melihat riwayat transaksi miliknya sendiri. Data diambil dari database menggunakan query `JOIN` pada tabel `transaksi`, `tiket`, `penonton`, `film`, dan `studio`.
+
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+
+---
+
+# Koneksi Database (JDBC)
+
+Koneksi ke database dibuat pada class `DatabaseConnection` yang berada di package `config`.
+
+```java
+public final class DatabaseConnection {
+
+    private static final String URL =
+            "jdbc:mysql://localhost:3306/sistem_manajemen_bioskop";
+
+    private static final String USER = "root";
+    private static final String PASSWORD = "";
+
+    private DatabaseConnection() {
+    }
+
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(
+                URL, USER, PASSWORD
+        );
+    }
+}
+```
+
+Driver MySQL ditambahkan melalui dependency Maven pada `pom.xml`:
+
+```xml
+<dependency>
+    <groupId>com.mysql</groupId>
+    <artifactId>mysql-connector-j</artifactId>
+    <version>9.5.0</version>
+</dependency>
+```
+
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+
+Setiap class DAO memanggil `DatabaseConnection.getConnection()` setiap kali membutuhkan koneksi ke database.
+
+---
+
+# Prepared Statement
+
+Seluruh query pada program menggunakan `PreparedStatement`. Nilai yang dimasukkan ke query diwakili tanda `?`, lalu diisi menggunakan method seperti `setString()`, `setInt()`, dan `setDouble()`. Dengan cara ini, query lebih aman dari **SQL Injection** karena input pengguna tidak digabungkan langsung ke dalam teks SQL.
+
+Contoh pada `FilmDAO` untuk menambah data (Create):
+
+```java
+String sql = "INSERT INTO film(judul, genre, durasi, harga_tiket) "
+        + "VALUES(?,?,?,?)";
+
+try (Connection c = DatabaseConnection.getConnection();
+     PreparedStatement ps = c.prepareStatement(sql)) {
+
+    ps.setString(1, film.getJudul());
+    ps.setString(2, film.getGenre());
+    ps.setInt(3, film.getDurasi());
+    ps.setDouble(4, film.getHarga());
+
+    ps.executeUpdate();
+}
+```
+
+Contoh untuk menampilkan data (Read):
+
+```java
+String sql = "SELECT * FROM film ORDER BY id_film";
+
+try (Connection c = DatabaseConnection.getConnection();
+     PreparedStatement ps = c.prepareStatement(sql);
+     ResultSet rs = ps.executeQuery()) {
+
+    while (rs.next()) {
+        daftar.add(new Film(
+                rs.getInt("id_film"),
+                rs.getString("judul"),
+                rs.getString("genre"),
+                rs.getInt("durasi"),
+                rs.getDouble("harga_tiket")
+        ));
+    }
+}
+```
+
+Penggunaan `try-with-resources` membuat `Connection`, `PreparedStatement`, dan `ResultSet` ditutup otomatis setelah selesai digunakan.
+
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+
+---
+
+# Penerapan DAO (Data Access Object)
+
+DAO adalah pola yang memisahkan kode akses database dari bagian program lainnya. Pada program ini, setiap tabel memiliki satu class DAO pada package `dao`:
+
+* `FilmDAO` : tambah, tampil, ubah, dan hapus data film
+* `StudioDAO` : tambah, tampil, ubah, dan hapus data studio
+* `PenontonDAO` : tambah, login, cari email, dan tampil data penonton
+* `TiketDAO` : tambah, tampil, ubah, dan hapus data tiket
+* `TransaksiDAO` : tambah transaksi, tampil seluruh transaksi, dan tampil transaksi berdasarkan penonton
+
+`BioskopController` tidak menulis query SQL secara langsung, tetapi hanya memanggil method dari DAO.
+
+Contohnya:
+
+```java
+private final FilmDAO filmDAO = new FilmDAO();
+
+filmDAO.tambah(film);
+List<Film> daftar = filmDAO.getSemua();
+```
+
+Dengan DAO, tugas setiap bagian menjadi lebih jelas. View menangani tampilan dan input, Controller mengatur alur program, Model menyimpan data objek, dan DAO menangani akses ke database.
+
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+
+---
+
+# Dummy Data (File .sql)
+
+Struktur tabel dan data awal disimpan dalam file `sistem_manajemen_bioskop.sql`, lalu di-import ke database MySQL (melalui phpMyAdmin pada Laragon). Data awal **diisi melalui database, bukan melalui kode program**.
+
+Database yang digunakan bernama `sistem_manajemen_bioskop` dengan 5 tabel:
+
+* `film` (id_film, Judul, genre, durasi, harga_tiket)
+* `studio` (id_studio, nama, kapasitas, tipe)
+* `penonton` (id_penonton, nama, email, no_hp, password)
+* `tiket` (id_tiket, id_penonton, id_film, id_studio, jumlah, harga_per_tiket, total_harga)
+* `transaksi` (id_transaksi, kode_transaksi, id_tiket, total_awal, diskon, total_bayar, tanggal_transaksi)
+
+Tabel `tiket` berelasi dengan `penonton`, `film`, dan `studio` melalui foreign key, sedangkan tabel `transaksi` berelasi dengan `tiket`.
+
+Contoh data awal pada tabel `film`:
+
+```sql
+INSERT INTO `film` (`id_film`, `Judul`, `genre`, `durasi`, `harga_tiket`) VALUES
+(1, 'Avenger: Endgame', 'Action, Sci-fi', 180, 50000),
+(2, 'Interstellar', 'Sci-fi', 150, 45000),
+(3, 'Pabrik Rambut', 'Thriller', 170, 50000),
+(4, 'Inside Out', 'Fantasy', 200, 45000);
+```
+
+Contoh data awal pada tabel `studio`:
+
+```sql
+INSERT INTO `studio` (`id_studio`, `nama`, `kapasitas`, `tipe`) VALUES
+(1, 'Studio 1', 100, 'Regular'),
+(2, 'Studio 2', 80, 'VIP'),
+(3, 'Studio 3', 120, 'Regular'),
+(4, 'Studio 4', 60, 'VIP');
+```
+
+Selain itu, file `.sql` juga berisi data awal untuk tabel `penonton` (5 data), `tiket` (4 data), dan `transaksi` (4 data), sehingga fitur lihat data penonton, kelola tiket, dan riwayat transaksi juga langsung menampilkan data.
+
+Contohnya data pada tabel `transaksi`:
+
+```sql
+INSERT INTO `transaksi` (`id_transaksi`, `kode_transaksi`, `id_tiket`, `total_awal`, `diskon`, `total_bayar`, `tanggal_transaksi`) VALUES
+(1, 'TRX001', 1, 100000, 10000, 90000, '2026-10-12 09:59:25'),
+(2, 'TRX002', 2, 55000, 5000, 50000, '2026-10-12 09:59:25'),
+(3, 'TRX003', 3, 100000, 10000, 90000, '2026-10-12 09:59:25'),
+(4, 'TRX004', 4, 55000, 0, 55000, '2026-10-12 09:59:25');
+```
+
+Karena data sudah ada di database, saat fitur Read dijalankan data langsung tampil tanpa perlu input dari awal.
+
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 ---
 
@@ -188,14 +379,10 @@ Encapsulation diterapkan dengan menggunakan atribut `private` pada class.
 
 Contohnya pada class `Film`:
 
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/b971e4c1-10a8-4fcd-85e2-0eb9be7c5389" />
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 
 Atribut tersebut tidak dapat diakses secara langsung dari class lain. Untuk mengakses atau mengubah data digunakan getter dan setter.
-
-Contohnya:
-
-
 
 Konsep ini juga diterapkan pada class seperti `Pengguna`, `Admin`, `Penonton`, `Studio`, `Tiket`, dan `Transaksi`.
 
@@ -209,24 +396,26 @@ Inheritance diterapkan pada hubungan antara class `Pengguna`, `Admin`, dan `Peno
 
 `Pengguna` digunakan sebagai class induk:
 
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/ab620993-dddd-4a71-8dea-399b89ec333c" />
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 
 Kemudian `Admin` dan `Penonton` mewarisi class tersebut:
 
 ### Admin
 ---
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/daeb3c55-c3ae-4892-8977-f8148dd51217" />
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 ### Penonton
 ---
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/34477df9-a693-4087-b727-e62dfbe0ea4a" />
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 Atribut umum seperti:
 
 ```java
+id
 nama
 email
+noHP
 ```
 
 diletakkan pada class `Pengguna`.
@@ -237,7 +426,7 @@ Dengan inheritance, class `Admin` dan `Penonton` dapat menggunakan atribut dan m
 
 ## 1. MVC (Model View Controller)
 
-Program menggunakan struktur **MVC** yang membagi program menjadi tiga bagian.
+Program menggunakan struktur **MVC** yang membagi program menjadi tiga bagian, dengan tambahan **DAO** untuk akses database.
 
 ### Model
 
@@ -245,14 +434,14 @@ Model digunakan untuk menyimpan data dan objek program.
 
 Contohnya:
 
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/4d1d7499-281d-4a93-96c3-8369bb746560" />
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 
 ### View
 
 View terdapat pada:
 
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/4effdbcc-981d-4de6-a68a-5d1c33b0b846" />
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 
 View bertugas menangani tampilan program dan input dari pengguna, seperti menu, input data, serta validasi input.
@@ -261,12 +450,12 @@ View bertugas menangani tampilan program dan input dari pengguna, seperti menu, 
 
 Controller terdapat pada:
 
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/04207fba-0ee5-468d-8b9c-a9d636bbb0d3" />
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 
-Controller bertugas mengatur alur program dan menghubungkan View dengan Model.
+Controller bertugas mengatur alur program dan menghubungkan View dengan Model dan DAO.
 
-Contohnya ketika penonton membeli tiket, Controller mengambil data film dan studio, memproses jumlah tiket, membuat objek `Tiket`, kemudian membuat objek `Transaksi`.
+Contohnya ketika penonton membeli tiket, Controller mengambil data film dan studio melalui DAO, memproses jumlah tiket, membuat objek `Tiket`, kemudian membuat objek `Transaksi`, lalu menyimpannya ke database melalui `TiketDAO` dan `TransaksiDAO`.
 
 Dengan MVC, kode menjadi lebih terstruktur karena tampilan, data, dan proses program dipisahkan.
 
@@ -276,42 +465,44 @@ Dengan MVC, kode menjadi lebih terstruktur karena tampilan, data, dan proses pro
 
 Polymorphism diterapkan melalui **method overriding**.
 
-Pada class `Pengguna` terdapat method:
+Pada class `Pengguna` terdapat method abstract:
 
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/23da0de7-6927-49d4-bf0c-725ba3cceab1" />
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 
 Method tersebut kemudian dioverride oleh class `Admin`:
 
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/2441f08c-addc-4563-8b70-d9975e88ca37" />
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 
 Sedangkan pada class `Penonton`:
 
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/95921afd-4487-4202-8b73-a6754e7cdabd" />
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 
-Nama method yang digunakan sama, yaitu `getRole()`, tetapi hasilnya berbeda berdasarkan class yang mengimplementasikannya.
-
-Method `toString()` juga dioverride pada beberapa class seperti `Admin`, `Penonton`, `Film`, `Studio`, `Tiket`, dan `Transaksi`.
+Nama method yang digunakan sama, yaitu `getRole()` dan `tampilkanMenu()`, tetapi hasilnya berbeda berdasarkan class yang mengimplementasikannya.
 
 ---
 
 ## 3. Method Overloading
 
-Pada program terdapat beberapa method yang menangani input berdasarkan jenis datanya, seperti:
+Method overloading adalah method dengan nama yang sama tetapi parameter yang berbeda. Pada program ini overloading diterapkan pada:
+
+**a. Method `hitungDiskon()` pada class `Penonton`**
 
 ```java
-bacaString()
-bacaInt()
-bacaDouble()
+public double hitungDiskon(double total)
+
+public double hitungDiskon(double total, int jumlahTiket)
 ```
 
-Method tersebut digunakan untuk menangani kebutuhan input yang berbeda.
+Versi pertama menghitung diskon berdasarkan total harga (5% untuk total minimal Rp50.000 dan 10% untuk total minimal Rp100.000). Versi kedua menambahkan jumlah tiket sebagai parameter, yaitu diskon 15% jika membeli minimal 4 tiket.
 
-Namun, secara aturan Java, method-method tersebut **belum termasuk method overloading** karena nama method-nya berbeda. Method overloading harus memiliki nama method yang sama tetapi parameter yang berbeda.
+**b. Constructor pada class `Film`, `Tiket`, `Transaksi`, `Pengguna`, dan `Penonton`**
 
-Jadi, penerapan yang benar-benar terlihat pada program adalah **method overriding**, sedangkan method overloading belum menjadi bagian utama dari kode program.
+Terdapat dua constructor: satu tanpa ID untuk data baru yang akan disimpan ke database, dan satu dengan ID untuk data yang dibaca dari database.
+
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 ---
 
@@ -319,17 +510,22 @@ Jadi, penerapan yang benar-benar terlihat pada program adalah **method overridin
 
 Program memiliki beberapa fitur utama:
 
+* Koneksi database MySQL menggunakan JDBC
+* Prepared Statement pada seluruh query
+* DAO untuk setiap tabel
+* Dummy data awal melalui file .sql
 * Login Admin
 * Login Penonton
 * Registrasi Penonton
 * CRUD Film
 * CRUD Studio
 * CRUD Tiket
-* CRUD Penonton
+* Lihat Data Penonton
 * Lihat Profil Penonton
 * Pembelian Tiket
 * Perhitungan harga tiket otomatis
 * Tambahan harga VIP Rp10.000
+* Diskon otomatis
 * Validasi nama
 * Validasi email
 * Validasi password
@@ -338,7 +534,6 @@ Program memiliki beberapa fitur utama:
 * Validasi tipe studio
 * Validasi kapasitas studio
 * Riwayat transaksi
-* ArrayList untuk penyimpanan data
 
 ---
 
@@ -347,7 +542,7 @@ Program memiliki beberapa fitur utama:
 ### Validasi Nama
 
 ```text
-Nama : Yahya Jailani
+Nama : Yahya123
 ```
 
 Output:
@@ -355,7 +550,7 @@ Output:
 ```text
 Nama hanya boleh berisi huruf dan spasi.
 ```
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/c52c1094-581c-46a5-88ef-36c35bbd1cd6" />
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 
 ### Validasi Email
@@ -370,7 +565,7 @@ Output:
 Format email tidak valid.
 Contoh : nama@gmail.com
 ```
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/78c25e7c-f94a-4338-94a9-aabe6328b570" />
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 ### Validasi Harga
 
@@ -383,7 +578,7 @@ Output:
 ```text
 Harga harus berupa angka.
 ```
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/6073d178-ae52-40f6-bd59-92df9049dd92" />
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 ### Validasi Tipe Studio
 
@@ -403,7 +598,7 @@ Tipe studio yang diperbolehkan:
 Regular
 VIP
 ```
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/f7fbba15-8654-43ac-bd89-9b7b746c6a2f" />
+<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
 
 ### Validasi Kapasitas Tiket
 
@@ -412,7 +607,7 @@ Jika kapasitas studio adalah 100 orang:
 ```text
 Jumlah tiket : 109
 ```
-<img width="345" height="300" alt="Screenshot 2026-10-08 210008" src="https://github.com/user-attachments/assets/1685d785-1924-48d4-a5e2-d7cd135a3e9f" />
+<img width="345" height="300" alt="image" src="GANTI_LINK_GAMBAR" />
 
 maka sistem akan menolak karena jumlah tiket melebihi kapasitas studio.
 
@@ -426,6 +621,6 @@ Pada program ini saya membuat interface bernama Pembayaran yang digunakan untuk 
 hitungTotal() dan
 tampilkanPembayaran()
 
-<img width="350" height="300" alt="Screenshot 2026-10-08 203704" src="https://github.com/user-attachments/assets/28837722-0db7-41d4-981b-68e3a1186ff0" />
+<img width="350" height="300" alt="image" src="GANTI_LINK_GAMBAR" />
 </p>
-Berikut Interface yang saya terapkan pada class pembayaran
+Interface tersebut diterapkan pada class Transaksi.
