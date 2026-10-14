@@ -20,7 +20,7 @@ import model.Film;
 public class FilmDAO {
 
     public void tambah(Film film) throws SQLException {
-        String sql = "INSERT INTO film(judul, genre, durasi, harga) "
+        String sql = "INSERT INTO film(judul, genre, durasi, harga_tiket) "
                 + "VALUES(?,?,?,?)";
 
         try (Connection c = DatabaseConnection.getConnection();
@@ -50,7 +50,7 @@ public class FilmDAO {
                         rs.getString("judul"),
                         rs.getString("genre"),
                         rs.getInt("durasi"),
-                        rs.getDouble("harga")
+                        rs.getDouble("harga_tiket")
                 ));
             }
         }

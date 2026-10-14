@@ -61,7 +61,7 @@ public class TiketDAO {
                 + "t.id_tiket, t.jumlah, t.harga_per_tiket, t.total_harga, "
                 + "p.id_penonton, p.nama AS nama_penonton, "
                 + "p.email, p.no_hp, p.password, "
-                + "f.id_film, f.judul, f.genre, f.durasi, f.harga, "
+                + "f.id_film, f.judul, f.genre, f.durasi, f.harga_tiket AS harga, "
                 + "s.id_studio, s.nama AS nama_studio, "
                 + "s.kapasitas, s.tipe "
                 + "FROM tiket t "
@@ -88,7 +88,7 @@ public class TiketDAO {
                         rs.getString("judul"),
                         rs.getString("genre"),
                         rs.getInt("durasi"),
-                        rs.getDouble("harga")
+                        rs.getDouble("harga_tiket")
                 );
 
                 Studio s = new Studio(
