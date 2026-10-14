@@ -15,7 +15,7 @@ public class Tiket {
     private Film film;
     private Studio studio;
     private int jumlah;
-    private double hargaPerTiket;
+    private double hargaTiket;
     private double totalHarga;
 
     public Tiket(Penonton penonton, Film film,
@@ -27,13 +27,13 @@ public class Tiket {
 
     public Tiket(int idTiket, Penonton penonton, Film film,
                  Studio studio, int jumlah,
-                 double hargaPerTiket, double totalHarga) {
+                 double hargaTiket, double totalHarga) {
         this.idTiket = idTiket;
         this.penonton = penonton;
         this.film = film;
         this.studio = studio;
         this.jumlah = jumlah;
-        this.hargaPerTiket = hargaPerTiket;
+        this.hargaTiket = hargaTiket;
         this.totalHarga = totalHarga;
     }
 
@@ -48,8 +48,8 @@ public class Tiket {
     }
 
     public void hitungUlang() {
-        hargaPerTiket = hitungHarga(film, studio);
-        totalHarga = hargaPerTiket * jumlah;
+        hargaTiket = hitungHarga(film, studio);
+        totalHarga = hargaTiket * jumlah;
     }
 
     public int getIdTiket() {
@@ -96,10 +96,14 @@ public class Tiket {
     }
 
     public double getHargaPerTiket() {
-        return hargaPerTiket;
+        return hargaTiket;
     }
 
     public double getTotalHarga() {
         return totalHarga;
+    }
+
+    public double getHargaTiket() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

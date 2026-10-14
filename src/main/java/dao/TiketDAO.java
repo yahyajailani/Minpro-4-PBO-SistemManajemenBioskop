@@ -26,7 +26,7 @@ public class TiketDAO {
     public int tambah(Tiket tiket) throws SQLException {
         String sql = "INSERT INTO tiket"
                 + "(id_penonton, id_film, id_studio, jumlah, "
-                + "harga_per_tiket, total_harga) "
+                + "harga_tiket, total_harga) "
                 + "VALUES(?,?,?,?,?,?)";
 
         try (Connection c = DatabaseConnection.getConnection();
@@ -37,7 +37,7 @@ public class TiketDAO {
             ps.setInt(2, tiket.getFilm().getIdFilm());
             ps.setInt(3, tiket.getStudio().getIdStudio());
             ps.setInt(4, tiket.getJumlah());
-            ps.setDouble(5, tiket.getHargaPerTiket());
+            ps.setDouble(5, tiket.getHargaTiket());
             ps.setDouble(6, tiket.getTotalHarga());
 
             ps.executeUpdate();
@@ -58,7 +58,7 @@ public class TiketDAO {
         List<Tiket> daftar = new ArrayList<>();
 
         String sql = "SELECT "
-                + "t.id_tiket, t.jumlah, t.harga_per_tiket, t.total_harga, "
+                + "t.id_tiket, t.jumlah, t.harga_tiket, t.total_harga, "
                 + "p.id_penonton, p.nama AS nama_penonton, "
                 + "p.email, p.no_hp, p.password, "
                 + "f.id_film, f.judul, f.genre, f.durasi, f.harga_tiket AS harga, "
@@ -102,7 +102,7 @@ public class TiketDAO {
                         rs.getInt("id_tiket"),
                         p, f, s,
                         rs.getInt("jumlah"),
-                        rs.getDouble("harga_per_tiket"),
+                        rs.getDouble("harga_tiket"),
                         rs.getDouble("total_harga")
                 );
 
@@ -115,7 +115,7 @@ public class TiketDAO {
 
     public void update(int id, Tiket tiket) throws SQLException {
         String sql = "UPDATE tiket SET id_penonton=?, id_film=?, "
-                + "id_studio=?, jumlah=?, harga_per_tiket=?, "
+                + "id_studio=?, jumlah=?, harga_tiket=?, "
                 + "total_harga=? WHERE id_tiket=?";
 
         try (Connection c = DatabaseConnection.getConnection();
@@ -125,7 +125,7 @@ public class TiketDAO {
             ps.setInt(2, tiket.getFilm().getIdFilm());
             ps.setInt(3, tiket.getStudio().getIdStudio());
             ps.setInt(4, tiket.getJumlah());
-            ps.setDouble(5, tiket.getHargaPerTiket());
+            ps.setDouble(5, tiket.getHargaTiket());
             ps.setDouble(6, tiket.getTotalHarga());
             ps.setInt(7, id);
 
