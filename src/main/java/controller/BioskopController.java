@@ -412,15 +412,11 @@ public class BioskopController {
             System.out.println("\n========== KELOLA TIKET ==========");
             System.out.println("1. Tambah Tiket");
             System.out.println("2. Lihat Tiket");
-            System.out.println("3. Update Tiket");
-            System.out.println("4. Hapus Tiket");
             System.out.println("0. Kembali");
 
             switch (view.bacaPilihan("Pilih menu: ", 0, 4)) {
                 case 1 -> tambahTiketAdmin();
                 case 2 -> lihatTiket();
-                case 3 -> updateTiket();
-                case 4 -> hapusTiket();
                 case 0 -> kembali = true;
             }
         }
@@ -516,98 +512,6 @@ public class BioskopController {
 
         for (int i = 0; i < daftar.size(); i++) {
             view.tampilTiket(daftar.get(i), i + 1);
-        }
-    }
-
-    private void updateTiket() {
-        List<Tiket> daftar = ambilTiket();
-
-        if (daftar.isEmpty()) {
-            view.pesan("Belum ada tiket untuk diperbarui.");
-            return;
-        }
-
-        for (int i = 0; i < daftar.size(); i++) {
-            view.tampilTiket(daftar.get(i), i + 1);
-        }
-
-        Tiket tiket = daftar.get(
-                view.bacaPilihan("Pilih nomor tiket: ", 1, daftar.size()) - 1
-        );
-
-        List<Film> filmList = ambilFilm();
-        List<Studio> studioList = ambilStudio();
-
-        if (filmList.isEmpty() || studioList.isEmpty()) {
-            view.pesan("Film atau studio belum tersedia.");
-            return;
-        }
-
-        for (int i = 0; i < filmList.size(); i++) {
-            view.tampilFilm(filmList.get(i), i + 1);
-        }
-
-        Film film = filmList.get(
-                view.bacaPilihan("Pilih nomor film: ", 1, filmList.size()) - 1
-        );
-
-        for (int i = 0; i < studioList.size(); i++) {
-            view.tampilStudio(studioList.get(i), i + 1);
-        }
-
-        Studio studio = studioList.get(
-                view.bacaPilihan(
-                        "Pilih nomor studio: ", 1, studioList.size()
-                ) - 1
-        );
-
-        int jumlah = view.bacaPositif("Jumlah tiket: ");
-
-        if (jumlah > studio.getKapasitas()) {
-            view.pesan("Jumlah tiket melebihi kapasitas studio.");
-            return;
-        }
-
-        tiket.setFilm(film);
-        tiket.setStudio(studio);
-        tiket.setJumlah(jumlah);
-
-        try {
-            tiketDAO.update(tiket.getIdTiket(), tiket);
-            view.pesan("Tiket berhasil diperbarui.");
-        } catch (SQLException e) {
-            tampilError("memperbarui tiket", e);
-        }
-    }
-
-    private void hapusTiket() {
-        List<Tiket> daftar = ambilTiket();
-
-        if (daftar.isEmpty()) {
-            view.pesan("Belum ada tiket untuk dihapus.");
-            return;
-        }
-
-        for (int i = 0; i < daftar.size(); i++) {
-            view.tampilTiket(daftar.get(i), i + 1);
-        }
-
-        Tiket tiket = daftar.get(
-                view.bacaPilihan("Pilih nomor tiket: ", 1, daftar.size()) - 1
-        );
-
-        if (!view.konfirmasi("Hapus tiket ini?")) {
-            return;
-        }
-
-        try {
-            tiketDAO.hapus(tiket.getIdTiket());
-            view.pesan("Tiket berhasil dihapus.");
-        } catch (SQLException e) {
-            tampilError(
-                    "menghapus tiket. Tiket yang sudah memiliki transaksi "
-                    + "tidak dapat dihapus", e
-            );
         }
     }
 

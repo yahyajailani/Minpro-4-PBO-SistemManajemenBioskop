@@ -95,15 +95,11 @@ public class Tiket {
         hitungUlang();
     }
 
-    public double getHargaPerTiket() {
+    public double getHargaTiket() {
         return hargaTiket;
     }
 
     public double getTotalHarga() {
         return totalHarga;
-    }
-
-    public double getHargaTiket() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

@@ -112,35 +112,4 @@ public class TiketDAO {
 
         return daftar;
     }
-
-    public void update(int id, Tiket tiket) throws SQLException {
-        String sql = "UPDATE tiket SET id_penonton=?, id_film=?, "
-                + "id_studio=?, jumlah=?, harga_tiket=?, "
-                + "total_harga=? WHERE id_tiket=?";
-
-        try (Connection c = DatabaseConnection.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql)) {
-
-            ps.setInt(1, tiket.getPenonton().getIdPenonton());
-            ps.setInt(2, tiket.getFilm().getIdFilm());
-            ps.setInt(3, tiket.getStudio().getIdStudio());
-            ps.setInt(4, tiket.getJumlah());
-            ps.setDouble(5, tiket.getHargaTiket());
-            ps.setDouble(6, tiket.getTotalHarga());
-            ps.setInt(7, id);
-
-            ps.executeUpdate();
-        }
-    }
-
-    public void hapus(int id) throws SQLException {
-        String sql = "DELETE FROM tiket WHERE id_tiket=?";
-
-        try (Connection c = DatabaseConnection.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql)) {
-
-            ps.setInt(1, id);
-            ps.executeUpdate();
-        }
-    }
 }
