@@ -584,7 +584,7 @@ Password minimal 6 karakter.
 ### Validasi Harga
 
 ```text
-Harga tiket film : Rpabc
+Harga tiket : Rpabc
 ```
 
 Output:
@@ -592,7 +592,7 @@ Output:
 ```text
 Harga harus lebih dari 0.
 ```
-<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/ff9befa2-04ec-4efc-b6dc-992c0c0e462e" />
 
 ### Validasi Tipe Studio
 
@@ -614,21 +614,4 @@ Output:
 ```text
 Masukkan angka antara 1 sampai 2.
 ```
-<img width="500" alt="image" src="GANTI_LINK_GAMBAR" />
-
-### Validasi Kapasitas Tiket
-
-Jika kapasitas studio adalah 100 orang:
-
-```text
-Jumlah tiket : 109
-```
-
-Output:
-
-```text
-Jumlah tiket melebihi kapasitas studio.
-```
-<img width="345" height="300" alt="image" src="GANTI_LINK_GAMBAR" />
-
-maka sistem akan menolak karena jumlah tiket melebihi kapasitas studio.
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/73b4790b-9b73-4f5a-9fd0-3f9a19b8f4e3" />
